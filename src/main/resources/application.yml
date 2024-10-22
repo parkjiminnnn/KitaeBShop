@@ -1,0 +1,47 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: KitaeBShop
+  devtools:
+    livereload:
+      enabled: true # 화면 갱신
+    restart:
+      enabled: true # 재시작
+  thymeleaf:
+    cache: false # 캐쉬 없음
+
+
+  # MYSQL 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_b
+    username: root
+    password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  security:
+    user:
+      name: test
+      password: 1234
+
+
+
+logging:
+  level:
+    org:
+      hibernate:
+        type:
+          description:
+            sql: trace
