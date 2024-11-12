@@ -1,5 +1,6 @@
 package inhatc.cse.kitaebshop.member.entity;
 
+import inhatc.cse.kitaebshop.common.entity.BaseEntity;
 import inhatc.cse.kitaebshop.member.constant.Role;
 import inhatc.cse.kitaebshop.member.dto.MemberDto;
 import jakarta.persistence.*;
@@ -13,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Member extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")

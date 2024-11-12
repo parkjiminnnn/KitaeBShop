@@ -1,5 +1,6 @@
 package inhatc.cse.kitaebshop.order.entity;
 
+import inhatc.cse.kitaebshop.common.entity.BaseEntity;
 import inhatc.cse.kitaebshop.item.entity.Item;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderItem {
+public class OrderItem extends BaseEntity {
     @Id   // 기본키 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincrement
     @Column(name = "order_item_id")

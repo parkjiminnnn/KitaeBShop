@@ -1,5 +1,6 @@
 package inhatc.cse.kitaebshop.cart.entity;
 
+import inhatc.cse.kitaebshop.common.entity.BaseEntity;
 import inhatc.cse.kitaebshop.item.entity.Item;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CartItem {
+public class CartItem  extends BaseEntity {
     @Id   // 기본키 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincrement
     @Column(name = "cart_item_id")

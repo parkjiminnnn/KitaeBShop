@@ -1,5 +1,6 @@
 package inhatc.cse.kitaebshop.item.entity;
 
+import inhatc.cse.kitaebshop.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Item {
+public class Item  extends BaseEntity {
 
     @Id   // 기본키 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincrement
