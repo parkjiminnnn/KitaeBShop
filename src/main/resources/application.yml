@@ -16,9 +16,9 @@ spring:
   # MYSQL 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spring_b
+    url: jdbc:mysql://localhost:3306/spring_a
     username: root
-    password: 1234
+    password: 12341234
 
   jpa:
     hibernate:
