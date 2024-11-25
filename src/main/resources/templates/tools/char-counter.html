@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 관리 사이트 - 홈</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body, html {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        background-color: #f4f6f9;
+        font-family: Arial, sans-serif;
+    }
+
+    .container-char-counter {
+        max-width: 800px;
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 20px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header, .card-body {
+        padding: 20px;
+    }
+
+    h2 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        font-size: 16px;
+        padding: 12px;
+        height: 150px;
+        resize: vertical;
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+    }
+
+    .char-count {
+        font-size: 18px;
+        font-weight: 500;
+        color: #6c757d;
+        margin-top: 15px;
+    }
+</style>
+<body>
+
+<div layout:fragment="content" class="container-char-counter">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>글자 수 계산기</h2>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="textInput" class="sr-only">텍스트 입력</label>
+                <textarea id="textInput" class="form-control" placeholder="여기에 텍스트를 입력하세요..."
+                          oninput="function countCharacters() {
+                          const text = document.getElementById('textInput').value;
+                          const charCount = text.length;
+                          document.getElementById('charCount').textContent = charCount;
+                          }
+                          countCharacters()"></textarea>
+            </div>
+            <p class="char-count">글자 수: <span id="charCount">0</span>자</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 관리 사이트 - 홈</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content" class="container text-center mt-5">
+    <div class="jumbotron bg-light p-5 rounded">
+        <h1 class="display-4">이력서 관리 사이트에 오신 것을 환영합니다!</h1>
+        <p class="lead mt-3">이력서를 효율적으로 관리하고 손쉽게 접근할 수 있도록 돕는 플랫폼입니다.</p>
+        <hr class="my-4">
+        <p>아래의 기능들을 통해 이력서를 등록하고, 관리하세요.</p>
+
+        <!-- 버튼들 -->
+        <div sec:authorize="isAuthenticated()">
+            <a href="/resume/add" class="btn btn-primary btn-lg" role="button">이력서 등록하기</a>
+            <a href="/resume/list" class="btn btn-secondary btn-lg" role="button">나의 이력서 보기</a>
+        </div>
+
+        <!-- 비로그인 상태에서는 로그인 안내 -->
+        <div sec:authorize="isAnonymous()">
+            <a href="/member/login" class="btn btn-primary btn-lg" role="button">로그인 후 사용하세요</a>
+        </div>
+    </div>
+
+    <!-- 기능 안내 섹션 -->
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">이력서 등록</h5>
+                    <p class="card-text">쉽고 빠르게 이력서를 등록하고 관리하세요.</p>
+                    <a href="/resume/add" class="btn btn-primary" sec:authorize="isAuthenticated()">이력서 등록</a>
+                    <a href="/member/login" class="btn btn-primary" sec:authorize="isAnonymous()">로그인 후 사용하세요</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">나의 이력서</h5>
+                    <p class="card-text">등록한 이력서를 확인하고 업데이트하세요.</p>
+                    <a href="/resume/list" class="btn btn-primary" sec:authorize="isAuthenticated()">나의 이력서</a>
+                    <a href="/member/login" class="btn btn-primary" sec:authorize="isAnonymous()">로그인 후 사용하세요</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body" sec:authorize="isAnonymous()">
+                    <h5 class="card-title">로그인/회원가입</h5>
+                    <p class="card-text">회원 가입 또는 로그인하여 모든 기능을 이용해보세요.</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="/member/login" class="btn btn-primary">로그인/회원가입</a>
+                    </div>
+                </div>
+                <div class="card-body" sec:authorize="isAuthenticated()">
+                    <h5 class="card-title">로그아웃</h5>
+                    <p class="card-text">로그아웃하기</p>
+                    <div class="d-flex justify-content-center">
+                        <a href="/member/logout" class="btn btn-danger">로그아웃</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

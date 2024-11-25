@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 이력서 목록</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content" class="container-fluid mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-11 col-lg-10">
+            <h2 class="text-center mb-4 text-primary font-weight-bold">나의 이력서 목록</h2>
+            <div class="row">
+                <!-- 각 이력서 항목을 카드로 표현 -->
+                <div class="col-md-6 col-lg-4 mb-4" th:each="resume : ${resumes}">
+                    <div class="card shadow border-0">
+                        <div class="card-body">
+                            <h5 class="card-title font-weight-bold text-primary" th:text="${resume.name}">이름</h5>
+                            <p class="card-text mb-1"><strong>이메일:</strong> <span th:text="${resume.email}">이메일</span></p>
+                            <p class="card-text mb-1"><strong>연락처:</strong> <span th:text="${resume.phone}">연락처</span></p>
+                            <p class="card-text mb-1"><strong>경력:</strong> <span th:text="${resume.experience}">경력</span></p>
+                            <p class="card-text mb-1"><strong>학력:</strong> <span th:text="${resume.education}">학력</span></p>
+                            <p class="card-text"><strong>기술 스킬:</strong> <span th:text="${resume.skills}">기술 스킬</span></p>
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/resume/edit/{id}(id=${resume.id})}" class="btn btn-outline-warning btn-sm">수정</a>
+                                <form th:action="@{/resume/delete/{id}(id=${resume.id})}" method="post">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm"
+                                            onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

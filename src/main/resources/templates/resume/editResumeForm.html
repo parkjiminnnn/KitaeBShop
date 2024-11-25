@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>이력서 수정</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div layout:fragment="content" class="container mt-5">
+    <h2 class="text-center">이력서 수정</h2>
+    <form method="post" th:action="@{/resume/edit/{id}(id=${resume.id})}" th:object="${resume}">
+        <div class="mb-3">
+            <label for="name" class="form-label">이름</label>
+            <input type="text" th:field="*{name}" id="name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">연락처</label>
+            <input type="text" th:field="*{phone}" id="phone" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">이메일</label>
+            <input type="text" th:field="*{email}" id="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="experience" class="form-label">경력</label>
+            <input type="text" th:field="*{experience}" id="experience" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="education" class="form-label">학력</label>
+            <input type="text" th:field="*{education}" id="education" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="skills" class="form-label">기술 스킬</label>
+            <input type="text" th:field="*{skills}" id="skills" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">수정 완료</button>
+    </form>
+</div>
+</body>
+</html>

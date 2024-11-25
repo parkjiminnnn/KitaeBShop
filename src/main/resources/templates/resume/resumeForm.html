@@ -7,43 +7,69 @@
     <meta charset="UTF-8">
     <title>이력서 등록하기</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* 페이지 전체 높이와 중앙 정렬 */
+        .container {
+            max-width: 900px;
+            padding: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .card-body {
+            padding: 60px;
+        }
+        .form-label {
+            font-weight: bold;
+        }
+        .btn-primary {
+            font-size: 1.2em;
+            padding: 15px;
+        }
+        .form-control:focus {
+            border-color: #0056b3;
+            box-shadow: 0px 0px 5px rgba(0, 86, 179, 0.2);
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content" class="container d-flex align-items-center min-vh-100">
     <div class="row justify-content-center w-100">
-        <div class="col-md-8 col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-body p-5">
-                    <h2 class="text-center mb-4">이력서 등록하기</h2>
-                    <!--/*@thymesVar id="resumeDto" type=""*/-->
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-5">이력서 등록하기</h2>
+                    <!-- 폼 시작 -->
                     <form action="/resume/add" method="post" th:object="${resumeDto}">
                         <!-- 이름 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="name" class="form-label">이름</label>
                             <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="이름을 입력해주세요" required>
                         </div>
                         <!-- 이메일 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="email" class="form-label">이메일</label>
                             <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="이메일 주소를 입력해주세요" required>
                         </div>
                         <!-- 연락처 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="phone" class="form-label">연락처</label>
                             <input type="tel" class="form-control" id="phone" th:field="*{phone}" placeholder="연락처를 입력해주세요" required>
                         </div>
                         <!-- 경력 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="experience" class="form-label">경력</label>
                             <textarea class="form-control" id="experience" th:field="*{experience}" rows="4" placeholder="경력을 간단히 입력해주세요"></textarea>
                         </div>
                         <!-- 학력 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="education" class="form-label">학력</label>
                             <textarea class="form-control" id="education" th:field="*{education}" rows="3" placeholder="학력을 입력해주세요"></textarea>
                         </div>
                         <!-- 기술 스킬 입력 -->
-                        <div class="mb-3">
+                        <div class="mb-4">
                             <label for="skills" class="form-label">기술 스킬</label>
                             <textarea class="form-control" id="skills" th:field="*{skills}" rows="3" placeholder="보유 기술을 입력해주세요 (예: Java, Python, SQL 등)"></textarea>
                         </div>
@@ -51,6 +77,7 @@
                         <!-- 제출 버튼 -->
                         <button type="submit" class="btn btn-primary w-100 mt-4">이력서 제출</button>
                     </form>
+                    <!-- 폼 끝 -->
                 </div>
             </div>
         </div>
