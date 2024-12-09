@@ -1,5 +1,10 @@
 server:
   port: 80
+  servlet:
+    encoding:
+      charset: utf-8
+      enabled: true
+      force: true
 
 spring:
   application:
@@ -11,8 +16,6 @@ spring:
       enabled: true # 재시작
   thymeleaf:
     cache: false # 캐쉬 없음
-
-
   # MYSQL 설정
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -45,3 +48,5 @@ logging:
         type:
           description:
             sql: trace
+custom:
+  upload-path: /Users/parkjimin/JavaSpring_ws/JiminShop/src/main/resources/static/uploads

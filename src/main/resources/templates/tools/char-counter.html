@@ -1,80 +1,118 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      layout:decorate="~{layouts/layout1}">
 <head>
     <meta charset="UTF-8">
-    <title>이력서 관리 사이트 - 홈</title>
+    <title>글자 수 계산기</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* 전체 배경 */
+        body, html {
+            height: 100%;
+            margin: 0;
+            background: linear-gradient(to right, #d1e8e2, #eaf0f1);
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+        }
+
+        .btn-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(to right, #4caf50, #2d8e41);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* 카드 */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1.2s ease-out;
+            height: auto; /* 카드 높이를 텍스트 필드에 맞춰 조정 */
+        }
+
+        .card-body {
+            padding: 40px 30px;
+        }
+
+        /* 텍스트 필드 */
+        .form-control {
+            width: 100%;
+            height: 600px !important; /* 텍스트 필드 높이 강제 설정 */
+            resize: none;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ced4da;
+            box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .form-control:focus {
+            border-color: #4caf50;
+            box-shadow: 0px 0px 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .char-count {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #555;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
-<style>
-    body, html {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0;
-        background-color: #f4f6f9;
-        font-family: Arial, sans-serif;
-    }
-
-    .container-char-counter {
-        max-width: 800px;
-        width: 100%;
-    }
-
-    .card {
-        border-radius: 20px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    .card-header, .card-body {
-        padding: 20px;
-    }
-
-    h2 {
-        color: #333;
-        font-weight: 600;
-        margin-bottom: 15px;
-    }
-
-    .form-control {
-        font-size: 16px;
-        padding: 12px;
-        height: 150px;
-        resize: vertical;
-        border-radius: 8px;
-        border: 1px solid #ced4da;
-    }
-
-    .char-count {
-        font-size: 18px;
-        font-weight: 500;
-        color: #6c757d;
-        margin-top: 15px;
-    }
-</style>
 <body>
 
-<div layout:fragment="content" class="container-char-counter">
-    <div class="card">
-        <div class="card-header bg-primary text-white text-center">
-            <h2>글자 수 계산기</h2>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <label for="textInput" class="sr-only">텍스트 입력</label>
-                <textarea id="textInput" class="form-control" placeholder="여기에 텍스트를 입력하세요..."
-                          oninput="function countCharacters() {
-                          const text = document.getElementById('textInput').value;
-                          const charCount = text.length;
-                          document.getElementById('charCount').textContent = charCount;
-                          }
-                          countCharacters()"></textarea>
+<div layout:fragment="content" class="container d-flex align-items-center min-vh-100">
+    <a href="/" class="btn btn-home">홈으로 이동</a>
+    <div class="row justify-content-center w-100">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center mb-4">글자 수 계산기</h2>
+                    <div class="form-group">
+                         <textarea id="textInput" class="form-control" placeholder="여기에 텍스트를 입력하세요..."
+                                   oninput="const text = document.getElementById('textInput').value;
+                                   const charCount = text.length;
+                                   document.getElementById('charCount').textContent = charCount;"></textarea>
+                    </div>
+                    <p class="char-count">글자 수: <span id="charCount">0</span>자</p>
+                </div>
             </div>
-            <p class="char-count">글자 수: <span id="charCount">0</span>자</p>
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const textInput = document.getElementById('textInput');
+        textInput.focus(); // 텍스트 필드에 자동으로 초점 맞춤
+    });
+
+    function countCharacters() {
+        const text = document.getElementById('textInput').value;
+        const charCount = text.length;
+        document.getElementById('charCount').textContent = charCount;
+    }
+</script>
 </body>
 </html>

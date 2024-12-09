@@ -14,6 +14,6 @@ public class HomeController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         boolean isAuthenticated = authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal());
         model.addAttribute("isAuthenticated", isAuthenticated);
-        return "home"; // home.html 템플릿으로 연결
+        return "home";
     }
 }

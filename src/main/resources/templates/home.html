@@ -1,18 +1,111 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>이력서 관리 사이트 - 홈</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* 배경 스타일 */
+        body {
+            background: radial-gradient(circle, #ffffff, #d1e8e2);
+            font-family: 'Segoe UI', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* 애니메이션 정의 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 헤더 섹션 */
+        .jumbotron {
+            background: linear-gradient(to right, #4caf50, #2d8e41);
+            color: white;
+            border-radius: 10px;
+            animation: slideIn 1.5s ease-out;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .jumbotron h1, .jumbotron p {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 버튼 스타일 */
+        .btn-primary, .btn-secondary {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            transition: all 0.3s ease-in-out;
+            border-radius: 25px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary:hover {
+            background-color: #495057;
+            transform: translateY(-3px);
+        }
+
+        /* 카드 스타일 */
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transform: scale(1);
+            transition: all 0.3s ease-in-out;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 카드 간 간격 및 정렬 */
+        .row {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content" class="container text-center mt-5">
-    <div class="jumbotron bg-light p-5 rounded">
+    <div class="jumbotron p-5">
         <h1 class="display-4">이력서 관리 사이트에 오신 것을 환영합니다!</h1>
         <p class="lead mt-3">이력서를 효율적으로 관리하고 손쉽게 접근할 수 있도록 돕는 플랫폼입니다.</p>
-        <hr class="my-4">
+        <hr class="my-4 bg-white">
         <p>아래의 기능들을 통해 이력서를 등록하고, 관리하세요.</p>
 
         <!-- 버튼들 -->
@@ -27,45 +120,38 @@
         </div>
     </div>
 
-    <!-- 기능 안내 섹션 -->
-    <div class="row mt-5">
-        <div class="col-md-4">
+    <!-- 카드 섹션 -->
+    <div class="row">
+        <!-- 카드 1 -->
+        <div class="col-md-4 mb-4">
             <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">이력서 등록</h5>
-                    <p class="card-text">쉽고 빠르게 이력서를 등록하고 관리하세요.</p>
-                    <a href="/resume/add" class="btn btn-primary" sec:authorize="isAuthenticated()">이력서 등록</a>
-                    <a href="/member/login" class="btn btn-primary" sec:authorize="isAnonymous()">로그인 후 사용하세요</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">나의 이력서</h5>
-                    <p class="card-text">등록한 이력서를 확인하고 업데이트하세요.</p>
-                    <a href="/resume/list" class="btn btn-primary" sec:authorize="isAuthenticated()">나의 이력서</a>
-                    <a href="/member/login" class="btn btn-primary" sec:authorize="isAnonymous()">로그인 후 사용하세요</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body" sec:authorize="isAnonymous()">
+                <div class="card-body text-center">
                     <h5 class="card-title">로그인/회원가입</h5>
                     <p class="card-text">회원 가입 또는 로그인하여 모든 기능을 이용해보세요.</p>
-                    <div class="d-flex justify-content-center">
-                        <a href="/member/login" class="btn btn-primary">로그인/회원가입</a>
-                    </div>
+                    <a href="/member/login" class="btn btn-primary" sec:authorize="isAnonymous()">로그인/회원가입</a>
+                    <a href="/member/logout" class="btn btn-primary" sec:authorize="isAuthenticated()">로그아웃</a>
                 </div>
-                <div class="card-body" sec:authorize="isAuthenticated()">
-                    <h5 class="card-title">로그아웃</h5>
-                    <p class="card-text">로그아웃하기</p>
-                    <div class="d-flex justify-content-center">
-                        <a href="/member/logout" class="btn btn-danger">로그아웃</a>
-                    </div>
+            </div>
+        </div>
+
+        <!-- 카드 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">글자 수 계산기</h5>
+                    <p class="card-text">텍스트 입력 시 글자 수를 계산하세요.</p>
+                    <a href="/tools/char-counter" class="btn btn-primary">글자 수 계산기</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 카드 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">맞춤법 검사기</h5>
+                    <p class="card-text">맞춤법을 검사해보세요.</p>
+                    <a href="/tools/spell-checker?text=" class="btn btn-primary">맞춤법 검사기</a>
                 </div>
             </div>
         </div>

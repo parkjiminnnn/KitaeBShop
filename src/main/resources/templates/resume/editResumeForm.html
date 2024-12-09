@@ -5,37 +5,157 @@
     <meta charset="UTF-8">
     <title>이력서 수정</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* 전체 배경 */
+        body {
+            background: linear-gradient(to right, #f3f8fc, #d9e9f1);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.2s ease-in-out;
+        }
+
+        h2 {
+            font-weight: bold;
+            color: #007bff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #4caf50, #2d8e41);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #3b7f3b;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* 미리보기 스타일 */
+        .preview-container img {
+            display: block;
+            max-width: 200px;
+            max-height: 200px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content" class="container mt-5">
     <h2 class="text-center">이력서 수정</h2>
-    <form method="post" th:action="@{/resume/edit/{id}(id=${resume.id})}" th:object="${resume}">
-        <div class="mb-3">
+    <form method="post" th:action="@{/resume/edit/{id}(id=${resume.id})}" th:object="${resume}"
+          enctype="multipart/form-data">
+        <div class="mb-4">
             <label for="name" class="form-label">이름</label>
-            <input type="text" th:field="*{name}" id="name" class="form-control" required>
+            <input type="text" th:field="*{name}" id="name" class="form-control" placeholder="이름을 입력해주세요" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="phone" class="form-label">연락처</label>
-            <input type="text" th:field="*{phone}" id="phone" class="form-control" required>
+            <input type="text" th:field="*{phone}" id="phone" class="form-control" placeholder="연락처를 입력해주세요" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="email" class="form-label">이메일</label>
-            <input type="text" th:field="*{email}" id="email" class="form-control" required>
+            <input type="text" th:field="*{email}" id="email" class="form-control" placeholder="이메일을 입력해주세요" required>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="experience" class="form-label">경력</label>
-            <input type="text" th:field="*{experience}" id="experience" class="form-control" required>
+            <textarea th:field="*{experience}" id="experience" class="form-control" rows="5"
+                      placeholder="경력을 입력해주세요" required></textarea>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="education" class="form-label">학력</label>
-            <input type="text" th:field="*{education}" id="education" class="form-control" required>
+            <textarea th:field="*{education}" id="education" class="form-control" rows="4"
+                      placeholder="학력을 입력해주세요" required></textarea>
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="skills" class="form-label">기술 스킬</label>
-            <input type="text" th:field="*{skills}" id="skills" class="form-control" required>
+            <input type="text" th:field="*{skills}" id="skills" class="form-control" placeholder="기술 스킬을 입력해주세요"
+                   required>
         </div>
-        <button type="submit" class="btn btn-primary">수정 완료</button>
+        <div class="mb-4">
+            <label for="photo" class="form-label">사진 첨부</label>
+            <input type="file" class="form-control" id="photo" name="photo" accept="image/*"
+                   onchange="previewImage(event)" required>
+
+            <!-- 파일 이름 표시 영역 -->
+            <div id="fileNameDisplay" style="margin-top: 10px; font-weight: bold;"></div>
+            <!-- 미리보기 이미지 -->
+            <div class="mt-3">
+                <img id="photoPreview" src="#" alt="미리보기 이미지"
+                     style="display: none; max-width: 200px; max-height: 200px; border-radius: 10px;">
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">수정 완료</button>
+        </div>
     </form>
 </div>
+<script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('photoPreview');
+        const fileNameDisplay = document.getElementById('fileNameDisplay'); // 파일 이름을 표시할 DOM
+
+        if (file) {
+            // 파일 이름 표시
+            fileNameDisplay.textContent = `파일 이름: ${file.name}`;
+
+            // 이미지 미리보기 설정
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = "#";
+            preview.style.display = "none";
+            fileNameDisplay.textContent = ""; // 파일 이름 초기화
+        }
+    }
+</script>
 </body>
 </html>

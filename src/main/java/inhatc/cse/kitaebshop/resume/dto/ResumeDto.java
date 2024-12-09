@@ -14,5 +14,6 @@ public class ResumeDto {
     private String experience;
     private String education;
     private String skills;
+    private String photoPath;
 
 }

@@ -1,12 +1,15 @@
 package inhatc.cse.kitaebshop.resume.entity;
 
-import inhatc.cse.kitaebshop.resume.constant.ResumeStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @Getter
@@ -36,6 +39,6 @@ public class Resume {
     @Size(max = 500)
     private String skills;
 
-    @Enumerated(EnumType.STRING)
-    private ResumeStatus status;  // 이력서 상태 (REGISTERED, APPROVED 등)
+    @Value("${custom.upload-path}")
+    private String photoPath;
 }

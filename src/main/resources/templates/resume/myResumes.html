@@ -1,34 +1,169 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 <head>
     <meta charset="UTF-8">
     <title>나의 이력서 목록</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #eef9fb, #d1e8e2);
+            font-family: 'Segoe UI', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 제목 스타일 */
+        .page-title {
+            font-weight: bold;
+            color: #000000 ;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .container-fluid {
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 15px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            background: #ffffff;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-body {
+            padding: 20px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #4caf50, #2d8e41);
+            border-radius: 15px 15px 0 0;
+            overflow: hidden;
+        }
+
+        .resume-image {
+            max-width: 100%; /* 카드 너비에 맞게 */
+            max-height: 150px; /* 높이 제한 */
+            object-fit: contain; /* 사진 전체를 보이게 */
+            border-radius: 10px; /* 둥근 모서리 */
+            border: 1px solid #ddd; /* 테두리 */
+            background-color: #f8f9fa; /* 비어 있는 부분 배경색 */
+            padding: 5px; /* 여백 추가 */
+        }
+
+        .btn-outline-warning {
+            border-color: #ffc107;
+            color: #ffc107;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .btn-outline-danger {
+            border-color: #dc3545;
+            color: #dc3545;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .btn-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(to right, #4caf50, #2d8e41);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-home:hover {
+            background-color: #2d8e41;
+            transform: translateY(-3px);
+        }
+
+        /* 애니메이션 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
 <div layout:fragment="content" class="container-fluid mt-3">
     <div class="row justify-content-center">
         <div class="col-md-11 col-lg-10">
-            <h2 class="text-center mb-4 text-primary font-weight-bold">나의 이력서 목록</h2>
+            <h2 class="page-title text-center mb-4 font-weight-bold">나의 이력서 목록</h2>
+            <a href="/" class="btn btn-home">홈으로 이동</a>
             <div class="row">
-                <!-- 각 이력서 항목을 카드로 표현 -->
                 <div class="col-md-6 col-lg-4 mb-4" th:each="resume : ${resumes}">
-                    <div class="card shadow border-0">
-                        <div class="card-body">
-                            <h5 class="card-title font-weight-bold text-primary" th:text="${resume.name}">이름</h5>
-                            <p class="card-text mb-1"><strong>이메일:</strong> <span th:text="${resume.email}">이메일</span></p>
-                            <p class="card-text mb-1"><strong>연락처:</strong> <span th:text="${resume.phone}">연락처</span></p>
-                            <p class="card-text mb-1"><strong>경력:</strong> <span th:text="${resume.experience}">경력</span></p>
-                            <p class="card-text mb-1"><strong>학력:</strong> <span th:text="${resume.education}">학력</span></p>
-                            <p class="card-text"><strong>기술 스킬:</strong> <span th:text="${resume.skills}">기술 스킬</span></p>
-                            <div class="d-flex justify-content-between">
-                                <a th:href="@{/resume/edit/{id}(id=${resume.id})}" class="btn btn-outline-warning btn-sm">수정</a>
+                    <div class="card">
+                        <!-- 이력서 사진 -->
+                        <div class="image-container">
+                            <img th:src="@{/uploads/{filename}(filename=${resume.photoPath})}" alt="사진"
+                                 class="resume-image">
+                        </div>
+                        <div class="card-body text-center">
+                            <!-- 이름 -->
+                            <h5 class="card-title font-weight-bold" th:text="${resume.name}">이름</h5>
+                            <!-- 이메일 -->
+                            <p class="card-text mb-1"><strong>이메일:</strong> <span th:text="${resume.email}"></span></p>
+                            <!-- 연락처 -->
+                            <p class="card-text mb-1"><strong>연락처:</strong> <span th:text="${resume.phone}"></span></p>
+                            <!-- 경력 -->
+                            <p class="card-text mb-1"><strong>경력:</strong> <span th:text="${resume.experience}"></span>
+                            </p>
+                            <!-- 학력 -->
+                            <p class="card-text mb-1"><strong>학력:</strong> <span th:text="${resume.education}"></span>
+                            </p>
+                            <!-- 기술 스킬 -->
+                            <p class="card-text"><strong>기술 스킬:</strong> <span th:text="${resume.skills}"></span></p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <a th:href="@{/resume/edit/{id}(id=${resume.id})}"
+                                   class="btn btn-outline-warning btn-sm">수정</a>
                                 <form th:action="@{/resume/delete/{id}(id=${resume.id})}" method="post">
                                     <button type="submit" class="btn btn-outline-danger btn-sm"
-                                            onclick="return confirm('정말 삭제하시겠습니까?');">삭제</button>
+                                            onclick="return confirm('정말 삭제하시겠습니까?');">삭제
+                                    </button>
                                 </form>
                             </div>
                         </div>
